@@ -260,8 +260,34 @@
             ]
         };
 
-        function salvarDadosLocal() {
-            localStorage.setItem('cyber_school_data', JSON.stringify(dadosEscolares));
+        async function salvarDadosLocal() {
+    try {
+        const resposta = await fetch(
+            'https://pcvtafuxuoddqovftdvt.supabase.co/rest/v1/cyber_school_data?id=eq.1',
+            {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': 'SUA_PUBLISHABLE_KEY',
+                    'Authorization': 'Bearer SUA_PUBLISHABLE_KEY',
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({
+                    data: dadosEscolares
+                })
+            }
+        );
+
+        if (!resposta.ok) {
+            const erro = await resposta.text();
+            console.error('Erro ao salvar no Supabase:', erro);
+            return;
+        }
+
+        console.log('Dados salvos no Supabase!');
+    } catch (erro) {
+        console.error('Erro de conexão:', erro);
+    }
         }
 
         function baixarArquivoApp() {
