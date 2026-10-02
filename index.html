@@ -311,8 +311,12 @@
         const resultado = await resposta.json();
 
         if (resultado.length > 0 && resultado[0].data) {
-            dadosEscolares = resultado[0].data;
-            console.log('Dados carregados do Supabase!');
+    dadosEscolares = resultado[0].data;
+    console.log('Dados carregados do Supabase!');
+
+    if (document.getElementById('containerMaterias')) {
+        renderizarMaterias();
+    }
         }
 
     } catch (erro) {
