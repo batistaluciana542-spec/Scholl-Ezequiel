@@ -290,7 +290,38 @@
     }
         }
 
-        function baixarArquivoApp() {
+        async function carregarDadosSupabase() {
+    try {
+        const resposta = await fetch(
+            'https://pcvtafuxuoddqovftdvt.supabase.co/rest/v1/cyber_school_data?id=eq.1&select=data',
+            {
+                method: 'GET',
+                headers: {
+                    'apikey': 'sb_publishable_Sr4BrK6Rnavpc_FMMFDILg_frE3yIhr',
+                    'Authorization': 'Bearer sb_publishable_Sr4BrK6Rnavpc_FMMFDILg_frE3yIhr'
+                }
+            }
+        );
+
+        if (!resposta.ok) {
+            console.error('Erro ao carregar:', await resposta.text());
+            return;
+        }
+
+        const resultado = await resposta.json();
+
+        if (resultado.length > 0 && resultado[0].data) {
+            dadosEscolares = resultado[0].data;
+            console.log('Dados carregados do Supabase!');
+        }
+
+    } catch (erro) {
+        console.error('Erro de conexão:', erro);
+    }
+     
+} 
+        
+     function baixarArquivoApp() {
             const htmlContent = document.documentElement.outerHTML;
             const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
             const url = URL.createObjectURL(blob);
