@@ -268,13 +268,41 @@
                 headers: {
                     'Content-Type': 'application/json',
                     'apikey': 'sb_publishable_Sr4BrK6Rnavpc_FMMFDILg_frE3yIhr',
-'Authorization': 'Bearer sb_publishable_Sr4BrK6Rnavpc_FMMFDILg_frE3yIhr',
+                    'Authorization': 'Bearer sb_publishable_Sr4BrK6Rnavpc_FMMFDILg_frE3yIhr',
                     'Prefer': 'return=minimal'
                 },
                 body: JSON.stringify({
                     data: dadosEscolares
                 })
             }
+        );
+
+        if (!resposta.ok) {
+            const erro = await resposta.text();
+
+            alert(
+                '❌ NÃO FOI POSSÍVEL SALVAR.\n\n' +
+                'Erro do servidor:\n' + erro
+            );
+
+            console.error('Erro ao salvar:', erro);
+            return false;
+        }
+
+        alert('✅ Salvo online com sucesso!');
+        console.log('Dados salvos no Supabase!');
+        return true;
+
+    } catch (erro) {
+        alert(
+            '❌ ERRO DE CONEXÃO.\n\n' +
+            erro.message
+        );
+
+        console.error('Erro de conexão:', erro);
+        return false;
+    }
+        }
         );
 
         if (!resposta.ok) {
