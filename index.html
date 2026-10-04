@@ -338,19 +338,91 @@
         const resultado = await resposta.json();
 
         if (resultado.length > 0 && resultado[0].data) {
-    dadosEscolares = resultado[0].data;
-    console.log('Dados carregados do Supabase!');
+async function salvarDadosLocal() {
+    try {
+        const resposta = await fetch(
+            'https://pcvtafuxuoddqovftdvt.supabase.co/rest/v1/cyber_school_data?id=eq.1',
+            {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'apikey': 'sb_publishable_Sr4BrK6Rnavpc_FMMFDILg_frE3yIhr',
+                    'Authorization': 'Bearer sb_publishable_Sr4BrK6Rnavpc_FMMFDILg_frE3yIhr',
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({
+                    data: dadosEscolares
+                })
+            }
+        );
 
-    if (document.getElementById('containerMaterias')) {
-        renderizarMaterias();
+        if (!resposta.ok) {
+            const erro = await resposta.text();
+
+            alert(
+                '❌ NÃO FOI POSSÍVEL SALVAR.\n\n' +
+                'Erro do servidor:\n' + erro
+            );
+
+            console.error('Erro ao salvar:', erro);
+            return false;
+        }
+
+        alert('✅ Salvo online com sucesso!');
+        console.log('Dados salvos no Supabase!');
+        return true;
+
+    } catch (erro) {
+        alert(
+            '❌ ERRO DE CONEXÃO.\n\n' +
+            erro.message
+        );
+
+        console.error('Erro de conexão:', erro);
+        return false;
     }
+}
+
+async function carregarDadosSupabase() {
+    try {
+        const resposta = await fetch(
+            'https://pcvtafuxuoddqovftdvt.supabase.co/rest/v1/cyber_school_data?id=eq.1&select=data',
+            {
+                method: 'GET',
+                headers: {
+                    'apikey': 'sb_publishable_Sr4BrK6Rnavpc_FMMFDILg_frE3yIhr',
+                    'Authorization': 'Bearer sb_publishable_Sr4BrK6Rnavpc_FMMFDILg_frE3yIhr'
+                }
+            }
+        );
+
+        if (!resposta.ok) {
+            console.error(
+                'Erro ao carregar:',
+                await resposta.text()
+            );
+            return;
+        }
+
+        const resultado = await resposta.json();
+
+        if (resultado.length > 0 && resultado[0].data) {
+            dadosEscolares = resultado[0].data;
+
+            console.log('Dados carregados do Supabase!');
+
+            if (document.getElementById('containerMaterias')) {
+                renderizarMaterias();
+            }
         }
 
     } catch (erro) {
-        console.error('Erro de conexão:', erro);
+        console.error(
+            'Erro de conexão:',
+            erro
+        );
     }
-     
-} 
+}
         
      function baixarArquivoApp() {
             const htmlContent = document.documentElement.outerHTML;
