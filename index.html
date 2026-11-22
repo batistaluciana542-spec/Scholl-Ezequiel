@@ -97,7 +97,7 @@ const seed={years:{},notices:[
 {id:'n2',title:'Organização de estudos',text:'Acompanhe atividades e avaliações pelo calendário.',date:'2026-11-22',important:false}
 ],events:[{id:'e1',title:'Avaliação bimestral',date:'2026-12-02',type:'Prova',year:'Todos'},{id:'e2',title:'Entrega de trabalhos',date:'2026-12-05',type:'Trabalho',year:'Todos'}],activities:[{id:'a1',title:'Revisão para avaliação',description:'Revisar os conteúdos do bimestre.',due:'2026-12-01',subject:'Matemática',year:'8',status:'Pendente'},{id:'a2',title:'Leitura e resumo',description:'Preparar um resumo do material indicado.',due:'2026-12-04',subject:'Português',year:'8',status:'Pendente'}],gallery:[{id:'g1',title:'Portal escolar',caption:'Área principal do portal.',image:''}],student:{name:'Aluno'}};
 for(let i=1;i<=3;i++){seed.years[i]={subjects:makeSubjects(),students:[]};}
-seed.years[8].subjects.push({name:'Ciências',grades:[9,8.5,9,9.5],absences:0,notes:''},{name:'Inglês',grades:[8,8.5,8,9],absences:0,notes:''});
+for(let y=1;y<=3;y++){seed.years[y].subjects.push({name:'Ciências',grades:[9,8.5,9,9.5],absences:0,notes:''},{name:'Inglês',grades:[8,8.5,8,9],absences:0,notes:''});}
 const initialNames={1:['Ana','Bruno'],2:['Carla','Daniel'],3:['Eduarda','Felipe'],4:['Gabriela','Henrique'],5:['Isabela','João'],6:['Kauã','Larissa'],7:['Marcos','Nicole'],8:['Anthony','Beatriz'],9:['Carlos','Diana']};
 for(let y=1;y<=3;y++){seed.years[y].students=initialNames[y].map((name,i)=>({id:'s'+y+'-'+(i+1),name,subjects:clone(seed.years[y].subjects)}));}
 
